@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Rebitishki Esports — Stream Overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#ff2438;
+    --white:#f2f3f5;
+    --muted:#b7bac0;
+    --dark:#0a0a0c;
+  }
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;width:1920px;height:1080px;
+    background:transparent;
+    font-family:Inter,Arial,sans-serif;
+    color:var(--white);
+    overflow:hidden;
+  }
+  .layer{position:absolute}
+
+  /* corner brand mark, top-left */
+  .brand{top:48px;left:56px;display:flex;align-items:center;gap:14px}
+  .brand-mark{width:44px;height:44px;filter:drop-shadow(0 0 10px rgba(255,36,56,.6));display:flex;align-items:center;justify-content:center}
+  .brand-mark img{width:100%;height:100%;object-fit:contain}
+  .brand-name{font-family:"Barlow Condensed";font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:.03em;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+  .brand-name em{display:block;font-style:normal;font-weight:600;font-size:11px;color:var(--muted);letter-spacing:.15em;margin-top:2px}
+
+  /* live badge, top-right */
+  .live-badge{top:52px;right:56px;display:flex;align-items:center;gap:10px;padding:9px 18px;background:rgba(10,10,12,.72);border:1px solid rgba(255,255,255,.12);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 10px rgba(255,36,56,.9);animation:pulse 1.6s ease-in-out infinite}
+  .live-badge span{font-family:"Barlow Condensed";font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  #clock{margin-left:8px;font-family:Inter;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* bottom scorebug, centered */
+  .scorebug{bottom:56px;left:50%;transform:translateX(-50%);display:flex;align-items:stretch;background:rgba(10,10,12,.82);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(6px)}
+  .team{display:flex;align-items:center;gap:14px;padding:0 30px;height:84px}
+  .team.b{flex-direction:row-reverse}
+  
+  /* Плашка под букву/логотип */
+  .badge{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Barlow Condensed", sans-serif;
+    font-size:26px;
+    font-weight:800;
+    line-height:1;
+    border:1px solid var(--red);
+    color:var(--red);
+    clip-path:polygon(15% 0,100% 0,85% 100%,0 100%);
+    flex-shrink:0;
+    text-align:center;
+  }
+  .badge.ghost{border-color:#4a4d54;color:#7a7e86}
+  
+  .team-name{font-family:"Barlow Condensed";font-size:24px;font-weight:800;text-transform:uppercase}
+  .score{font-family:"Barlow Condensed";font-size:38px;font-weight:900;min-width:34px;text-align:center}
+  .mid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;border-left:1px solid rgba(255,255,255,.12);border-right:1px solid rgba(255,255,255,.12)}
+  .mid .bo{font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .mid .game{font-family:"Barlow Condensed";font-size:16px;color:var(--red);margin-top:2px}
+
+  /* social ticker, bottom-right */
+  .socials{bottom:60px;right:56px;text-align:right;font-family:"Barlow Condensed";font-size:15px;letter-spacing:.05em;color:var(--muted);text-shadow:0 2px 8px rgba(0,0,0,.6)}
+  .socials b{color:var(--white)}
+
+  /* webcam frame, bottom-left */
+  .cam-frame{bottom:56px;left:56px;width:420px;height:236px;border:2px solid var(--red);box-shadow:0 0 0 6px rgba(10,10,12,.5),0 0 30px rgba(255,36,56,.25)}
+  .cam-frame:before,.cam-frame:after{content:"";position:absolute;width:20px;height:20px;border:2px solid var(--white)}
+  .cam-frame:before{top:-2px;left:-2px;border-right:0;border-bottom:0}
+  .cam-frame:after{bottom:-2px;right:-2px;border-left:0;border-top:0}
+</style>
+</head>
+<body>
+
+  <div class="layer brand">
+    <span class="brand-mark">
+      <img src="logo.png" alt="Rebitishki Logo">
+    </span>
+    <span class="brand-name">Rebitishki<em>Esports · Dota 2</em></span>
+  </div>
+
+  <div class="layer live-badge">
+    <span class="live-dot"></span>
+    <span>Live</span>
+    <span id="clock">--:--</span>
+  </div>
+
+  <div class="layer cam-frame"></div>
+
+  <div class="layer scorebug">
+    <div class="team a">
+      <div class="badge">R</div>
+      <span class="team-name">Rebitishki</span>
+      <span class="score" id="score-a" data-edit="team A score">0</span>
+    </div>
+    <div class="mid">
+      <span class="bo">BO3</span>
+      <span class="game" data-edit="current game number">GAME 1</span>
+    </div>
+    <div class="team b">
+      <div class="badge ghost">?</div>
+      <span class="team-name" data-edit="opponent name">TBD</span>
+      <span class="score" id="score-b" data-edit="team B score">0</span>
+    </div>
+  </div>
+
+  <div class="layer socials">
+    <div><b>twitch.tv/solsticemd</b></div>
+    <div>t.me/rebitishki</div>
+  </div>
+
+  <script>
+    function tick(){
+      var d = new Date();
+      var h = String(d.getHours()).padStart(2,'0');
+      var m = String(d.getMinutes()).padStart(2,'0');
+      document.getElementById('clock').textContent = h + ':' + m;
+    }
+    tick();
+    setInterval(tick, 1000 * 15);
+  </script>
+</body>
+</html>

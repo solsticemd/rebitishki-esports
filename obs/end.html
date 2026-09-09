@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REBITKSHI ESPORTS — STREAM ENDING</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --panel: #111215;
+            --line: rgba(255, 255, 255, 0.12);
+            --white: #f2f3f5;
+            --muted: #9aa0a6;
+            --red: #ff2438;
+            --red-glow: rgba(255, 36, 56, 0.4);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--bg);
+            color: var(--white);
+            font-family: Inter, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- LOOP ANIMATED BACKGROUND --- */
+        .loop-bg {
+            position: absolute;
+            inset: -100px;
+            z-index: 0;
+            pointer-events: none;
+            background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 40px);
+            animation: gridScroll 12s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(56px, 56px); }
+        }
+
+        .glow-orb {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+            filter: blur(100px);
+            z-index: 1;
+            pointer-events: none;
+            animation: floatGlow 10s ease-in-out infinite alternate;
+        }
+
+        .glow-left { top: -200px; left: -150px; }
+        .glow-right { bottom: -250px; right: -150px; animation-delay: -5s; }
+
+        @keyframes floatGlow {
+            0% { transform: scale(0.9) translate(0, 0); opacity: 0.5; }
+            100% { transform: scale(1.2) translate(40px, -30px); opacity: 0.9; }
+        }
+
+        .scanline {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
+            background-size: 100% 4px;
+        }
+
+        /* --- OBS DISPLAY CONTAINER --- */
+        .obs-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1100px;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        /* Header / Brand Badge */
+        .stream-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(17, 18, 21, 0.85);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--muted);
+            padding: 10px 20px;
+            backdrop-filter: blur(8px);
+            margin-bottom: 28px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .brand-mark {
+            width: 26px; height: 26px;
+            background: var(--red);
+            color: #000;
+            font-family: "Barlow Condensed", sans-serif;
+            font-weight: 900;
+            font-size: 16px;
+            display: grid;
+            place-items: center;
+            clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+        }
+
+        .brand-text {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+
+        .dot-offline {
+            width: 8px; height: 8px;
+            background: var(--muted);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--muted);
+        }
+
+        /* Main Titles */
+        .main-title {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(54px, 7.5vw, 110px);
+            font-weight: 900;
+            line-height: 0.88;
+            text-transform: uppercase;
+            letter-spacing: .01em;
+            margin-bottom: 16px;
+            text-shadow: 0 0 50px rgba(0,0,0,0.9), 0 0 20px rgba(255,36,56,0.3);
+        }
+
+        .main-title span { color: var(--red); }
+
+        .sub-title {
+            font-size: 16px;
+            color: var(--muted);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-bottom: 48px;
+            font-weight: 600;
+        }
+
+        /* Social Links Grid */
+        .socials-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            max-width: 760px;
+            margin: 0 auto 40px;
+        }
+
+        .social-box {
+            background: rgba(17, 18, 21, 0.9);
+            border: 1px solid var(--line);
+            padding: 20px 15px;
+            position: relative;
+            backdrop-filter: blur(12px);
+            clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .social-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--red);
+            box-shadow: 0 0 8px var(--red);
+        }
+
+        .social-platform {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .social-handle {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: .05em;
+        }
+
+        /* Final Message Box */
+        .thanks-strip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 18, 21, 0.7);
+            border: 1px solid var(--line);
+            padding: 12px 36px;
+            backdrop-filter: blur(10px);
+        }
+
+        .thanks-text {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--white);
+        }
+
+        /* OBS Border Overlay */
+        .obs-frame {
+            position: absolute;
+            inset: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+            z-index: 5;
+        }
+        .obs-frame::before {
+            content: "STREAM OFFLINE // SEE YOU NEXT TIME";
+            position: absolute;
+            bottom: 10px; right: 15px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            letter-spacing: .1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loop-bg"></div>
+    <div class="glow-orb glow-left"></div>
+    <div class="glow-orb glow-right"></div>
+    <div class="scanline"></div>
+    <div class="obs-frame"></div>
+
+    <div class="obs-container">
+        
+        <!-- Stream Status Header -->
+        <div class="stream-badge">
+            <div class="brand-mark">R</div>
+            <div class="brand-text">REBITKSHI ESPORTS</div>
+            <div class="dot-offline"></div>
+        </div>
+
+        <h1 class="main-title">STREAM IS <span>ENDED</span></h1>
+        <p class="sub-title">THATS IT! // SEE YOU SOON</p>
+
+        <!-- Social Media Grid -->
+        <div class="socials-row">
+            <div class="social-box">
+                <div class="social-platform">TELEGRAM</div>
+                <div class="social-handle">@REBITKSHI</div>
+            </div>
+            <div class="social-box">
+                <div class="social-platform">X</div>
+                <div class="social-handle">REBITKSHI.ES</div>
+            </div>
+            <div class="social-box">
+                <div class="social-platform">TWICH</div>
+                <div class="social-handle">SOLSTICEMD</div>
+            </div>
+        </div>
+
+        <!-- Thanks Strip -->
+        <div class="thanks-strip">
+            <span class="thanks-text">SUBSCRIBE TO OUR SOCIALS TO BE ALWAYS NOTIFIED</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
