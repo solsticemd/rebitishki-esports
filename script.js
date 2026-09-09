@@ -127,7 +127,7 @@ const newsDatabase = {
     date: 'Sep 09, 2026',
     title: 'Merch Concepts Revealed & Pre-Orders Open',
     body: `<p>We are excited to share the first look at the official Rebitishki Esports merchandise collection!</p>
-           <p>Our line-up features the <strong>Pro Jersey 2026</strong> and the heavyweight <strong>Team Hoodie</strong>.</p>
+           <p>Our line-up features the <strong>Pro Jersey 2026</strong> and the heavyweight <strong>Team Bomber</strong>.</p>
            <p>Visit our new <a href="merch.html" style="color:var(--red,#ff2438); font-weight: 600;">Merch Page</a> to check out concepts and place your pre-order!</p>`
   },
   'roster-announcement': {
