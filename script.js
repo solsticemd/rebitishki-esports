@@ -126,7 +126,7 @@ const newsDatabase = {
   'merch-concepts': {
     date: 'Sep 09, 2026',
     title: 'Merch Concepts Revealed & Pre-Orders Open',
-    body: `<p>We are excited to share the first look at the official Rebitishki Esports merchandise collection!</p>
+    body: `<p>We are excited to share the first look at the official Rebitishki Squad merchandise collection!</p>
            <p>Our line-up features the <strong>Pro Jersey 2026</strong> and the heavyweight <strong>Team Bomber</strong>.</p>
            <p>Visit our new <a href="merch.html" style="color:var(--red,#ff2438); font-weight: 600;">Merch Page</a> to check out concepts and place your pre-order!</p>`
   },
@@ -139,12 +139,12 @@ const newsDatabase = {
   'first-tournament': {
     date: 'Aug 25, 2026',
     title: 'First Official Tournament on Faceit',
-    body: `<p>It is official — Rebitishki Esports is stepping into the competitive arena on Faceit.</p>`
+    body: `<p>It is official — Rebitishki Squad is stepping into the competitive arena on Faceit.</p>`
   },
   'team-foundation': {
     date: 'Aug 10, 2026',
-    title: 'Rebitishki Esports Founded',
-    body: `<p>Rebitishki Esports was created with a clear vision: bring dedicated players together under one banner.</p>`
+    title: 'Rebitishki Squad Founded',
+    body: `<p>Rebitishki Squad was created with a clear vision: bring dedicated players together under one banner.</p>`
   }
 };
 
